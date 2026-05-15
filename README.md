@@ -87,7 +87,8 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
                      │
                      ▼
 ┌──────────────────────────────────────────┐
-│            AuthPlatform.Mvc              │
+│            AuthPlatform.Mvc
+    (UI – calls API via HTTP)              │
 │------------------------------------------│
 │ - Login / Logout UI                      │
 │ - MVC Controllers & Views                │
@@ -95,10 +96,11 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │ - Calls API using Bearer Token           │
 │ - Generates RDLC Reports                 │
 └────────────────────┬─────────────────────┘
-                     │ HTTP API Calls
+                     │ HTTP ONLY (no project reference)
                      ▼
 ┌──────────────────────────────────────────┐
-│             AuthPlatform.Api             │
+│             AuthPlatform.Api
+(Controllers, JWT, DI, etc.)             │
 │------------------------------------------│
 │ - Authentication                         │
 │ - Authorization                          │
@@ -106,7 +108,7 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │ - Middleware                             │
 │ - Stateless API Layer                    │
 └────────────────────┬─────────────────────┘
-                     │
+                     │  MUST reference Application
                      ▼
 ┌──────────────────────────────────────────┐
 │         AuthPlatform.Application         │
@@ -117,7 +119,7 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │ - Validators                             │
 │ - Business Workflows                     │
 └────────────────────┬─────────────────────┘
-                     │
+                     │  MUST reference Domain
                      ▼
 ┌──────────────────────────────────────────┐
 │            AuthPlatform.Domain           │
@@ -127,7 +129,7 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │ - Business Rules                         │
 │ - Core Models                            │
 └────────────────────┬─────────────────────┘
-                     │
+                     │  MUST reference Domain + Application
                      ▼
 ┌──────────────────────────────────────────┐
 │         AuthPlatform.Infrastructure      │
