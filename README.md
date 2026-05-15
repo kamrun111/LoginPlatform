@@ -72,13 +72,13 @@ The project also serves as:
 
 # Architecture Overview
 
-The solution follows Clean Architecture principles with clear separation between business logic, infrastructure, API, and presentation.
+The solution follows **Clean Architecture** principles with clear separation between business logic, infrastructure, API, and presentation.
 
 The authentication flow starts from the browser and moves through MVC, API, Application services, Domain rules, and finally Infrastructure and SQL Server.
 
 ```text
 ┌──────────────────────────────────────────┐
-│                Browser                   │
+│                 Browser                  │
 │------------------------------------------│
 │ - User accesses Login Page               │
 │ - Holds Secure HttpOnly Session Cookie   │
@@ -87,8 +87,8 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
                      │
                      ▼
 ┌──────────────────────────────────────────┐
-│            AuthPlatform.Mvc
-    (UI – calls API via HTTP)              │
+│            AuthPlatform.Mvc              │
+│        (UI – calls API via HTTP)         │
 │------------------------------------------│
 │ - Login / Logout UI                      │
 │ - MVC Controllers & Views                │
@@ -99,8 +99,8 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
                      │ HTTP ONLY (no project reference)
                      ▼
 ┌──────────────────────────────────────────┐
-│             AuthPlatform.Api
-(Controllers, JWT, DI, etc.)             │
+│             AuthPlatform.Api             │
+│      (Controllers, JWT, DI, etc.)       │
 │------------------------------------------│
 │ - Authentication                         │
 │ - Authorization                          │
@@ -108,7 +108,7 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │ - Middleware                             │
 │ - Stateless API Layer                    │
 └────────────────────┬─────────────────────┘
-                     │  MUST reference Application
+                     │ MUST reference Application
                      ▼
 ┌──────────────────────────────────────────┐
 │         AuthPlatform.Application         │
@@ -119,20 +119,22 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │ - Validators                             │
 │ - Business Workflows                     │
 └────────────────────┬─────────────────────┘
-                     │  MUST reference Domain
+                     │ MUST reference Domain
                      ▼
 ┌──────────────────────────────────────────┐
 │            AuthPlatform.Domain           │
+│      (Entities, Interfaces, Core)        │
 │------------------------------------------│
 │ - Entities                               │
 │ - Interfaces                             │
 │ - Business Rules                         │
 │ - Core Models                            │
 └────────────────────┬─────────────────────┘
-                     │  MUST reference Domain + Application
+                     │ MUST reference Domain + Application
                      ▼
 ┌──────────────────────────────────────────┐
-│         AuthPlatform.Infrastructure      │
+│       AuthPlatform.Infrastructure        │
+│        (EF, Dapper, SQL, Repos)          │
 │------------------------------------------│
 │ - EF Core                                │
 │ - Dapper                                 │
@@ -142,8 +144,6 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │ - SQL Server Access                      │
 └──────────────────────────────────────────┘
 ```
-
----
 
 # Clean Architecture Rules
 
