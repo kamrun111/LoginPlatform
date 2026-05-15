@@ -89,7 +89,7 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │  • Calls API using Bearer Token                              │
 │  • Generates RDLC Reports                                    │
 └──────────────────────────────┬───────────────────────────────┘
-                               │
+                               │   
                                ▼
 ┌──────────────────────────────────────────────────────────────┐
 │                      AuthPlatform.Api                        │
@@ -104,7 +104,7 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │  • Middleware                                                │
 │  • Stateless API Layer                                       │
 └──────────────────────────────┬───────────────────────────────┘
-                               │
+                               │   SERVICE CALL
                                ▼
 ┌──────────────────────────────────────────────────────────────┐
 │                  AuthPlatform.Application                    │
@@ -116,9 +116,9 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │  • Use Cases                                                 │
 │  • DTOs                                                      │
 │  • Validators                                                │
-│  • Business Workflows                                        │
+│  • Calls IUserRepository (Domain interface)                                       │
 └──────────────────────────────┬───────────────────────────────┘
-                               │
+                               │     INTERFACE CALL
                                ▼
 ┌──────────────────────────────────────────────────────────────┐
 │                    AuthPlatform.Domain                       │
@@ -127,11 +127,11 @@ The authentication flow starts from the browser and moves through MVC, API, Appl
 │                 REFERENCES: NONE                             │
 ├──────────────────────────────────────────────────────────────┤
 │  • Entities                                                  │
-│  • Interfaces                                                │
+│  • IUserRepository interface                                              │
 │  • Business Rules                                            │
 │  • Core Models                                               │
 └──────────────────────────────┬───────────────────────────────┘
-                               │
+                               │    IMPLEMENTATION IN INFRA
                                ▼
 ┌──────────────────────────────────────────────────────────────┐
 │               AuthPlatform.Infrastructure                    │
