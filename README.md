@@ -128,9 +128,8 @@ The system starts from the **user login flow**, because this project is mainly a
 │ - Repository Interfaces                  │
 │ - Business Rules                         │
 └────────────────────┬─────────────────────┘
-                     ▲
-                     │ Implements interfaces
-                     │
+                     │ Interfaces defined here
+                     ▼
 ┌──────────────────────────────────────────┐
 │         AuthPlatform.Infrastructure      │
 │------------------------------------------│
@@ -144,9 +143,11 @@ The system starts from the **user login flow**, because this project is mainly a
 └──────────────────────────────────────────┘
 ```
 
+> ⚠️ **Note:** Infrastructure sits at the bottom of the diagram because it *implements* the interfaces defined in Domain. The dependency arrow points **inward** — Infrastructure depends on Domain, not the other way around. This is a core Clean Architecture principle.
+
 ---
 
-# 🔄 Architecture Flow
+# 🔄 Request Flow
 
 ```text
 Browser
@@ -164,7 +165,7 @@ Application AuthService
 Domain Auth Rules
    │
    ▼
-Infrastructure EF Core / Dapper
+Infrastructure (EF Core / Dapper)
    │
    ▼
 SQL Server
@@ -337,10 +338,12 @@ John Doe
 
 ### Effective Permission Resolution
 
+User-level permissions are resolved **additively on top of** role permissions. A user's effective permissions are the union of both sets.
+
 ```text
 Final Permissions =
-Role Permissions
-+ User Permissions
+  Role Permissions (from assigned role)
++ User Permissions (directly assigned to the user)
 ```
 
 ---
@@ -500,25 +503,23 @@ Supports:
 
 ## Dependency Rule
 
+In Clean Architecture, **outer layers depend on inner layers — never the reverse**. Domain is the core and has no dependencies. Each layer only knows about the layer directly inside it.
+
 ```text
-AuthPlatform.Domain
-   ↑
-AuthPlatform.Application
-   ↑
-AuthPlatform.Infrastructure
-   ↑
-AuthPlatform.Api
-   ↑
-AuthPlatform.Mvc
+AuthPlatform.Mvc          (outermost — depends on API)
+   │
+   ▼
+AuthPlatform.Api          (depends on Application)
+   │
+   ▼
+AuthPlatform.Infrastructure  (depends on Domain; implements its interfaces)
+   │
+   ▼
+AuthPlatform.Application  (depends on Domain)
+   │
+   ▼
+AuthPlatform.Domain       (innermost — no dependencies)
 ```
-
-The inner layers do not depend on outer layers.
-
-- Domain does not know about Application, Infrastructure, API, or MVC
-- Application depends only on Domain
-- Infrastructure implements interfaces
-- API uses Application services
-- MVC communicates only with API
 
 ---
 
@@ -563,13 +564,7 @@ AuthPlatform.sln
 
 ## 3. Configure Connection String
 
-Update:
-
-```json
-appsettings.json
-```
-
-Example:
+Update `appsettings.json` in `AuthPlatform.Api`:
 
 ```json
 "ConnectionStrings": {
@@ -581,17 +576,16 @@ Example:
 
 ## 4. Apply Database Migrations
 
-Set startup project:
-
-```text
-AuthPlatform.Api
-```
-
-Run:
+Run the following command from the solution root. The `--project` flag points to the Infrastructure project (where the `DbContext` lives), and `--startup-project` points to the API project (which has the connection string and DI setup):
 
 ```bash
-dotnet ef database update
+dotnet ef database update --project AuthPlatform.Infrastructure --startup-project AuthPlatform.Api
 ```
+
+> ⚠️ If you have not yet created a migration, run this first:
+> ```bash
+> dotnet ef migrations add InitialCreate --project AuthPlatform.Infrastructure --startup-project AuthPlatform.Api
+> ```
 
 ---
 
