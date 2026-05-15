@@ -10,14 +10,14 @@ AuthPlatform is a reusable authentication and authorization platform designed fo
 
 In many projects, developers spend a large amount of time rebuilding the same authentication features again and again:
 
-* Login and logout
-* JWT handling
-* Refresh tokens
-* Roles and permissions
-* Audit logging
-* Session handling
-* Reporting
-* Security setup
+- Login and logout
+- JWT handling
+- Refresh tokens
+- Roles and permissions
+- Audit logging
+- Session handling
+- Reporting
+- Security setup
 
 The goal of this project is to solve that problem by providing a clean, modular, and production-ready authentication foundation that can easily be integrated into different systems.
 
@@ -25,48 +25,48 @@ Instead of rebuilding authentication infrastructure for every application, devel
 
 This platform is designed to be:
 
-* Reusable
-* Scalable
-* Secure
-* Modular
-* Enterprise-ready
+- Reusable
+- Scalable
+- Secure
+- Modular
+- Enterprise-ready
 
 AuthPlatform can be used in:
 
-* ERP Systems
-* HRM Systems
-* School Management Systems
-* Hospital Systems
-* Finance Applications
-* Inventory Systems
-* SaaS Platforms
-* Internal Enterprise Systems
+- ERP Systems
+- HRM Systems
+- School Management Systems
+- Hospital Systems
+- Finance Applications
+- Inventory Systems
+- SaaS Platforms
+- Internal Enterprise Systems
 
 The project also serves as:
 
-* A reusable authentication module
-* A Clean Architecture reference project
-* A secure enterprise application foundation
-* A learning resource for enterprise ASP.NET Core development
+- A reusable authentication module
+- A Clean Architecture reference project
+- A secure enterprise application foundation
+- A learning resource for enterprise ASP.NET Core development
 
 ---
 
 # Core Features
 
-* JWT Authentication
-* Refresh Tokens
-* Role-Based Authorization
-* User-Based Permissions
-* Claims-Based Security
-* Session-Based JWT Handling
-* Audit Logging
-* Login History Tracking
-* EF Core + Dapper Hybrid Data Access
-* RDLC Reporting
-* PDF & Excel Export
-* Secure Password Hashing
-* Permission Middleware
-* Clean Architecture Structure
+- JWT Authentication
+- Refresh Tokens
+- Role-Based Authorization
+- User-Based Permissions
+- Claims-Based Security
+- Session-Based JWT Handling
+- Audit Logging
+- Login History Tracking
+- EF Core + Dapper Hybrid Data Access
+- RDLC Reporting
+- PDF & Excel Export
+- Secure Password Hashing
+- Permission Middleware
+- Clean Architecture Structure
 
 ---
 
@@ -149,23 +149,23 @@ The project follows the main Clean Architecture principle:
 
 > Inner layers never depend on outer layers.
 
-### Dependency Flow
+## Dependency Flow
 
-* Domain has no dependencies.
-* Application depends only on Domain.
-* Infrastructure depends on Domain and Application.
-* API depends on Application and Infrastructure.
-* MVC communicates with API through HTTP calls only.
+- Domain has no dependencies.
+- Application depends only on Domain.
+- Infrastructure depends on Domain and Application.
+- API depends on Application and Infrastructure.
+- MVC communicates with API through HTTP calls only.
 
-### Important Rules
+## Important Rules
 
-* MVC never accesses the database directly.
-* API remains stateless for access-token authentication.
-* Repository interfaces are defined in Domain.
-* Repository implementations live in Infrastructure.
-* DTOs are used across boundaries.
-* EF Core is mainly used for transactional operations.
-* Dapper is used for optimized reads, reports, and high-performance queries.
+- MVC never accesses the database directly.
+- API remains stateless for access-token authentication.
+- Repository interfaces are defined in Domain.
+- Repository implementations live in Infrastructure.
+- DTOs are used across boundaries.
+- EF Core is mainly used for transactional operations.
+- Dapper is used for optimized reads, reports, and high-performance queries.
 
 ---
 
@@ -189,10 +189,10 @@ AuthPlatform.sln
 
 Contains:
 
-* Entities
-* Repository interfaces
-* Business rules
-* Shared base models
+- Entities
+- Repository interfaces
+- Business rules
+- Shared base models
 
 Example:
 
@@ -208,12 +208,12 @@ Common/
 
 Contains:
 
-* Application services
-* DTOs
-* Validators
-* Mapping profiles
-* Business workflows
-* Service interfaces
+- Application services
+- DTOs
+- Validators
+- Mapping profiles
+- Business workflows
+- Service interfaces
 
 Example:
 
@@ -231,13 +231,13 @@ Mappings/
 
 Contains:
 
-* EF Core DbContext
-* EF Core repositories
-* Dapper repositories
-* JWT generation
-* Password hashing
-* SQL scripts
-* Repository implementations
+- EF Core DbContext
+- EF Core repositories
+- Dapper repositories
+- JWT generation
+- Password hashing
+- SQL scripts
+- Repository implementations
 
 Example:
 
@@ -255,11 +255,11 @@ SQL/
 
 Contains:
 
-* REST APIs
-* Authentication pipeline
-* Middleware
-* Authorization
-* Filters
+- REST APIs
+- Authentication pipeline
+- Middleware
+- Authorization
+- Filters
 
 Example:
 
@@ -275,12 +275,12 @@ Filters/
 
 Contains:
 
-* MVC UI
-* Views
-* Session-based token handling
-* API communication
-* RDLC reporting
-* PDF/Excel export
+- MVC UI
+- Views
+- Session-based token handling
+- API communication
+- RDLC reporting
+- PDF/Excel export
 
 Example:
 
@@ -338,8 +338,8 @@ Example:
 
 ```text
 John Doe
- ├── Report.Export
- └── User.Delete
+ ├── Expenditure.Approve
+ └── Expenditure.Edit
 ```
 
 ## Effective Permission Resolution
@@ -360,16 +360,16 @@ This provides flexibility for enterprise systems where users may require additio
 
 ## Core Authentication Tables
 
-| Table               | Purpose                       |
-| ------------------- | ----------------------------- |
-| AuthUsers           | Stores system users           |
-| AuthRoles           | Stores user roles             |
-| AuthPermissions     | Stores available permissions  |
+| Table | Purpose |
+|---|---|
+| AuthUsers | Stores system users |
+| AuthRoles | Stores user roles |
+| AuthPermissions | Stores available permissions |
 | AuthUserPermissions | Stores user-level permissions |
 | AuthRolePermissions | Stores role-level permissions |
-| AuthLoginHistories  | Tracks login attempts         |
-| AuthAuditActivities | Stores audit logs             |
-| AuthRefreshTokens   | Stores refresh tokens         |
+| AuthLoginHistories | Tracks login attempts |
+| AuthAuditActivities | Stores audit logs |
+| AuthRefreshTokens | Stores refresh tokens |
 
 ---
 
@@ -379,24 +379,24 @@ This provides flexibility for enterprise systems where users may require additio
 
 Used for:
 
-* Create
-* Update
-* Delete
-* Entity tracking
-* Migrations
-* Transactional operations
+- Create
+- Update
+- Delete
+- Entity tracking
+- Migrations
+- Transactional operations
 
 ## Dapper
 
 Used for:
 
-* Reports
-* Read-heavy queries
-* Dashboard summaries
-* Permission queries
-* Stored procedures
-* Fast lookups
-* Optimized SQL operations
+- Reports
+- Read-heavy queries
+- Dashboard summaries
+- Permission queries
+- Stored procedures
+- Fast lookups
+- Optimized SQL operations
 
 ---
 
@@ -404,37 +404,37 @@ Used for:
 
 ## API Security
 
-* Stateless JWT authentication
-* Claims-based authorization
-* Permission middleware
-* Authorization policies
-* Refresh token validation
-* Token rotation support
-* Token revocation support
+- Stateless JWT authentication
+- Claims-based authorization
+- Permission middleware
+- Authorization policies
+- Refresh token validation
+- Token rotation support
+- Token revocation support
 
 ## MVC Security
 
-* JWT tokens are NOT stored in browser localStorage
-* JWT tokens are NOT stored in browser sessionStorage
-* Tokens are stored only in server-side session
-* Browser receives only Secure HttpOnly cookies
+- JWT tokens are NOT stored in browser localStorage
+- JWT tokens are NOT stored in browser sessionStorage
+- Tokens are stored only in server-side session
+- Browser receives only Secure HttpOnly cookies
 
 ## Password Security
 
 Supported hashing methods:
 
-* PBKDF2
-* BCrypt
+- PBKDF2
+- BCrypt
 
 ## Audit Logging
 
 The system tracks:
 
-* User actions
-* Login attempts
-* Role assignments
-* Permission changes
-* Sensitive operations
+- User actions
+- Login attempts
+- Role assignments
+- Permission changes
+- Sensitive operations
 
 ---
 
@@ -444,20 +444,20 @@ The system uses RDLC reporting for generating server-side reports.
 
 ## Reports Without Parameters
 
-* Active Users Report
-* Dashboard Summary Report
+- Active Users Report
+- Dashboard Summary Report
 
 ## Reports With Parameters
 
-* User Permission Report
-* Role Permission Report
-* Login History Report
-* Audit Activity Report
+- User Permission Report
+- Role Permission Report
+- Login History Report
+- Audit Activity Report
 
 ## Export Formats
 
-* PDF
-* Excel
+- PDF
+- Excel
 
 ---
 
@@ -465,30 +465,30 @@ The system uses RDLC reporting for generating server-side reports.
 
 ## Backend
 
-* ASP.NET Core Web API
-* ASP.NET Core MVC
-* Entity Framework Core
-* Dapper
-* SQL Server
+- ASP.NET Core Web API
+- ASP.NET Core MVC
+- Entity Framework Core
+- Dapper
+- SQL Server
 
 ## Security
 
-* JWT Authentication
-* Refresh Tokens
-* Claims-Based Authorization
-* Permission-Based Authorization
-* PBKDF2 / BCrypt Password Hashing
+- JWT Authentication
+- Refresh Tokens
+- Claims-Based Authorization
+- Permission-Based Authorization
+- PBKDF2 / BCrypt Password Hashing
 
 ## Reporting
 
-* RDLC Reports
-* PDF Export
-* Excel Export
+- RDLC Reports
+- PDF Export
+- Excel Export
 
 ## Validation & Mapping
 
-* FluentValidation
-* AutoMapper
+- FluentValidation
+- AutoMapper
 
 ---
 
@@ -568,17 +568,17 @@ dotnet run --project AuthPlatform.Mvc
 
 Planned improvements include:
 
-* Multi-tenancy
-* Redis caching
-* API versioning
-* CQRS + MediatR
-* Background jobs
-* OpenTelemetry tracing
-* Docker support
-* Kubernetes deployment
-* Permission caching
-* Distributed caching
-* Identity provider integration
+- Multi-tenancy
+- Redis caching
+- API versioning
+- CQRS + MediatR
+- Background jobs
+- OpenTelemetry tracing
+- Docker support
+- Kubernetes deployment
+- Permission caching
+- Distributed caching
+- Identity provider integration
 
 ---
 
@@ -602,9 +602,9 @@ MIT License
 
 Developed using:
 
-* ASP.NET Core
-* Clean Architecture
-* EF Core
-* Dapper
-* JWT Security
-* RDLC Reporting
+- ASP.NET Core
+- Clean Architecture
+- EF Core
+- Dapper
+- JWT Security
+- RDLC Reporting
