@@ -4,57 +4,170 @@ Enterprise-grade Authentication & Authorization Platform built with **ASP.NET Co
 
 ---
 
-# 🚀 Overview
+# 🚀 Introduction
 
-AuthPlatform is a scalable enterprise-ready authentication and authorization solution designed using **Clean Architecture** principles.
+AuthPlatform is a reusable enterprise-grade Authentication & Authorization system built with **ASP.NET Core** and **Clean Architecture**.
 
-It provides:
+The purpose of this project is to provide a complete ready-to-integrate authentication module so developers and companies do not need to build login, authorization, permissions, JWT handling, audit logging, reporting, and security infrastructure from scratch for every new project.
 
-- Custom Authentication
-- JWT + Refresh Token security
-- Role-based authorization
-- User-level permission overrides
-- Audit logging
-- Login history tracking
-- Session-based JWT handling in MVC
-- RDLC reporting with PDF/Excel export
-- EF Core + Dapper hybrid data access
+Instead of spending time designing authentication repeatedly, developers can simply integrate AuthPlatform into their own business systems and focus entirely on their core business requirements.
+
+This platform is designed to be:
+
+- Reusable
+- Scalable
+- Secure
+- Modular
+- Enterprise-ready
+
+The system supports:
+
+- JWT Authentication
+- Refresh Tokens
+- Role-based Authorization
+- User-based Permissions
+- Claims-based Security
+- Audit Logging
+- Login History Tracking
+- Session-based JWT Management
+- RDLC Reporting
+- EF Core + Dapper Hybrid Data Access
+
+AuthPlatform can be integrated into:
+
+- ERP Systems
+- HRM Systems
+- School Management Systems
+- Hospital Systems
+- Finance Applications
+- Inventory Systems
+- SaaS Platforms
+- Enterprise Internal Systems
+
+Developers can use this project as:
+
+- A production-ready authentication server
+- A reusable authentication module
+- A Clean Architecture reference project
+- A secure enterprise application foundation
+
+The architecture is designed in a way that:
+
+- MVC never directly accesses the database
+- API remains stateless
+- Security is centralized
+- Permissions are flexible
+- Reporting is modular
+- Future modules can easily be added
+
+This allows teams to plug the authentication module into any enterprise application without redesigning security every time.
 
 ---
 
 # 🏗 Architecture
 
-The solution follows **Clean Architecture** with strict dependency flow:
+The solution follows **Clean Architecture** with strict dependency flow.
+
+The system starts from the **user login flow**, because this project is mainly an enterprise authentication and authorization platform.
 
 ```text
-┌─────────────────────────────┐
-│        AuthPlatform.Mvc     │
-│  (UI Client / RDLC Reports) │
-└──────────────┬──────────────┘
-               │ HTTP API Calls
-               ▼
-┌─────────────────────────────┐
-│        AuthPlatform.Api     │
-│ (REST API + Middleware)     │
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│   AuthPlatform.Application  │
-│ (Use Cases / Services / DTOs)
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│     AuthPlatform.Domain     │
-│ (Entities / Interfaces)     │
-└──────────────┬──────────────┘
-               ▲
-               │
-┌─────────────────────────────┐
-│ AuthPlatform.Infrastructure │
-│ EF Core / Dapper / JWT      │
-└─────────────────────────────┘
+┌──────────────────────────────────────────┐
+│                Browser                   │
+│------------------------------------------│
+│ - User accesses Login Page               │
+│ - Holds Secure HttpOnly Session Cookie   │
+│ - Does NOT store JWT tokens              │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│            AuthPlatform.Mvc              │
+│------------------------------------------│
+│ - Login / Logout UI                      │
+│ - MVC Controllers & Views                │
+│ - Stores JWT + Refresh Token in Session  │
+│ - Calls API using Bearer Token           │
+│ - Generates RDLC Reports                 │
+└────────────────────┬─────────────────────┘
+                     │ HTTP API Calls
+                     ▼
+┌──────────────────────────────────────────┐
+│             AuthPlatform.Api             │
+│------------------------------------------│
+│ - AuthController                         │
+│ - RoleController                         │
+│ - PermissionController                   │
+│ - JWT Authentication                     │
+│ - Permission Middleware                  │
+│ - Stateless Authorization                │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│         AuthPlatform.Application         │
+│------------------------------------------│
+│ - Auth Services                          │
+│ - Permission Use Cases                   │
+│ - Role Services                          │
+│ - DTOs                                   │
+│ - Validators                             │
+│ - Application Interfaces                 │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│            AuthPlatform.Domain           │
+│------------------------------------------│
+│ - AuthUser                               │
+│ - AuthRole                               │
+│ - AuthPermission                         │
+│ - AuthUserPermission                     │
+│ - AuthRolePermission                     │
+│ - AuthLoginHistory                       │
+│ - AuthAuditActivity                      │
+│ - Repository Interfaces                  │
+│ - Business Rules                         │
+└────────────────────┬─────────────────────┘
+                     ▲
+                     │ Implements interfaces
+                     │
+┌──────────────────────────────────────────┐
+│         AuthPlatform.Infrastructure      │
+│------------------------------------------│
+│ - EF Core DbContext                      │
+│ - EF Core Repositories                   │
+│ - Dapper Repositories                    │
+│ - Password Hasher                        │
+│ - JWT Token Generator                    │
+│ - Refresh Token Storage                  │
+│ - SQL Views / Stored Procedures          │
+└──────────────────────────────────────────┘
+```
+
+---
+
+# 🔄 Architecture Flow
+
+```text
+Browser
+   │
+   ▼
+MVC Login Page
+   │
+   ▼
+API AuthController
+   │
+   ▼
+Application AuthService
+   │
+   ▼
+Domain Auth Rules
+   │
+   ▼
+Infrastructure EF Core / Dapper
+   │
+   ▼
+SQL Server
 ```
 
 ---
@@ -381,29 +494,6 @@ Supports:
 
 ---
 
-# 🔄 Request Flow
-
-```text
-Browser
-   │
-   ▼
-MVC Application
-   │
-   ▼
-API Gateway
-   │
-   ▼
-Application Services
-   │
-   ▼
-Infrastructure Layer
-   │
-   ▼
-SQL Server
-```
-
----
-
 # 🧠 Clean Architecture Rules
 
 ---
@@ -411,9 +501,24 @@ SQL Server
 ## Dependency Rule
 
 ```text
-Outer Layers depend on Inner Layers
-Inner Layers NEVER depend on Outer Layers
+AuthPlatform.Domain
+   ↑
+AuthPlatform.Application
+   ↑
+AuthPlatform.Infrastructure
+   ↑
+AuthPlatform.Api
+   ↑
+AuthPlatform.Mvc
 ```
+
+The inner layers do not depend on outer layers.
+
+- Domain does not know about Application, Infrastructure, API, or MVC
+- Application depends only on Domain
+- Infrastructure implements interfaces
+- API uses Application services
+- MVC communicates only with API
 
 ---
 
